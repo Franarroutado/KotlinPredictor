@@ -1,0 +1,49 @@
+group 'com.xabarin'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.0.5-2'
+    ext.reactfx_version = '2.0-M5'
+    ext.kovenantjfx_version = '3.3.0'
+    ext.jfoenix_version = '1.0.0'
+
+    repositories {
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "com.github.jengelman.gradle.plugins:shadow:1.2.4"
+    }
+}
+
+apply plugin: 'kotlin'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+shadowJar {
+    classifier = 'fat'
+    manifest {
+        attributes 'Main-Class': 'com.xabarin.ui.App'
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+mainClassName = 'com.xabarin.ui.App'
+
+run {
+    args = ["run"]
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    // Reactive event streams, observable values and more for JavaFX.
+    compile "org.reactfx:reactfx:$reactfx_version"
+    // Promises for Kotlin. http://kovenant.komponents.nl
+    compile "nl.komponents.kovenant:kovenant-jfx:$kovenantjfx_version"
+    // JavaFx Material Design Library
+    compile "com.jfoenix:jfoenix:$jfoenix_version"
+}
